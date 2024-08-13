@@ -1,0 +1,36 @@
+version: '3.1'
+
+services:
+  mysql:
+    platform: linux/x86_64
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'   
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'      
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3307:3306'
+    expose:
+      - '3307'
+    networks:
+      - mired
+  microservice:
+    image: microservice
+    ports:
+      - '8080:8080'
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    networks:
+      - mired
+    environment:
+      DATABASE_URL: jdbc:mysql://mysql:3306/db?autoReconnect=true&useSSL=false
+      DATABASE_USER: user
+      DATABASE_PASSWORD: password
+networks:
+  mired:
+    driver: bridge
