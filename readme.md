@@ -1,6 +1,6 @@
 # Proyecto de Microservicio Java Dockerizado
 
-Este proyecto contiene un microservicio Java que interactúa con una base de datos MySQL. Ambos servicios están contenedorizados y se gestionan a través de Docker Compose.
+Este proyecto contiene un microservicio Java que interactúa con una base de datos MySQL. Ambos servicios están contenerizados y se gestionan a través de Docker Compose.
 
 ## Requisitos
 
