@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: authorization
-          image: knimisica/authorization:51
+          image: knimisica/authorization:52
           envFrom:
             - configMapRef:
                 name: authorization-secret
