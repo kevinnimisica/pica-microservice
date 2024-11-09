@@ -1,6 +1,8 @@
 package com.pica.microservice.jwt;
 
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +39,8 @@ public class JwtUtils {
 		if (cookie != null) {
 			return cookie.getValue();
 		} else {
-			return null;
+			String bearer = request.getHeader("Authorization");
+			return bearer.substring(7, bearer.length());
 		}
 	}
 
@@ -81,7 +84,7 @@ public class JwtUtils {
 		return Jwts.builder()
 				   .setSubject(username)
 				   .setIssuedAt(new Date())
-				   .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+				   .setExpiration(Date.from(LocalDateTime.now().plusHours(1).atZone(ZoneId.systemDefault()).toInstant()))
 				   .signWith(key(), SignatureAlgorithm.HS256)
 				   .compact();
 	}

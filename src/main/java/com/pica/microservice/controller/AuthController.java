@@ -3,7 +3,6 @@ package com.pica.microservice.controller;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +23,7 @@ import com.pica.microservice.controller.dto.LoginRequest;
 import com.pica.microservice.controller.dto.MessageResponse;
 import com.pica.microservice.controller.dto.SignUpRequest;
 import com.pica.microservice.controller.dto.UserInfoResponse;
+import com.pica.microservice.controller.dto.ValidateRequest;
 import com.pica.microservice.jwt.JwtUtils;
 import com.pica.microservice.model.ERole;
 import com.pica.microservice.model.Role;
@@ -124,6 +124,13 @@ public class AuthController {
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
+
+	@PostMapping("/validate")
+	public ResponseEntity<?> validateToken(@Valid @RequestBody ValidateRequest validateRequest){
+
+		return ResponseEntity.ok(jwtUtils.validateJwtToken(validateRequest.getToken()));
+
 	}
 
 	@PostMapping("/signout")
