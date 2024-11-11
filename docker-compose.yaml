@@ -1,8 +1,6 @@
-version: '3.1'
-
 services:
   postgres:
-    image: postgres:13  # You can change the version as needed
+    image: postgres:13
     container_name: postgres
     restart: always
     environment:
@@ -10,15 +8,16 @@ services:
       POSTGRES_USER: 'user'
       POSTGRES_PASSWORD: 'password'
     ports:
-      - '3307:5432'  # Exposing PostgreSQL default port (5432) on 3307
+      - '3307:5432'
     expose:
       - '5432'
     networks:
       - mired
-  microservice:
+
+  pica_microservice:
     image: microservice
     ports:
-      - '8080:8080'
+      - '8087:8083'
     build:
       dockerfile: Dockerfile
     depends_on:
@@ -26,9 +25,10 @@ services:
     networks:
       - mired
     environment:
-      DATABASE_URL: jdbc:mysql://mysql:3306/db?autoReconnect=true&useSSL=false
+      DATABASE_URL: jdbc:postgresql://postgres:5432/db?autoReconnect=true&useSSL=false
       DATABASE_USER: user
       DATABASE_PASSWORD: password
+
 networks:
   mired:
     driver: bridge
