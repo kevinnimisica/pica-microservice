@@ -32,6 +32,6 @@ spec:
     app: authorization
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 8083
+      targetPort: 8083
   type: ClusterIP
